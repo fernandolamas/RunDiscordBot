@@ -2,7 +2,7 @@ const { Message } = require('discord.js');
 const aliases = require('../config/commands.json');
 const { staffRoleID, prefix } = require('../config/config.json');
 const { randomNumber } = require('../functions/generalFunctions');
-const { runTheFecherWithDiscord } = require('../webchecker/webchecker');
+const { runTheFecherWithDiscord , fechByPage} = require('../webchecker/webchecker');
 
 
 
@@ -35,7 +35,7 @@ const handleMessage = (msg) => {
                 runTheFecherWithDiscord(msg);
                 return;
             } else {
-                fetchByPage(msg, args);
+                fechByPage(msg, args);
                 return;
             }
         }
