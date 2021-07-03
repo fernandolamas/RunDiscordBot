@@ -13,7 +13,7 @@ const toSecondMailer = mailObject.toMail.secondmail;
 const toThirdMailer = mailObject.toMail.thirdmail;
 const fromMailerPassword = mailObject.fromMailer.password;
 
-const minutesToRetry = 30000 // 40 minutes = 2400000 ms, 30 seconds = 30000 ms
+const minutesToRetry = 2400000 // 40 minutes = 2400000 ms, 30 seconds = 30000 ms
 
 let transporter = mailer.createTransport({
     service: mailObject.fromMailer.service,
@@ -29,12 +29,12 @@ function fechThePage(webpage, fromMailer, toFirstMailer, toSecondMailer, toThird
     try {
         fetch(webpage)
             .catch(err => {
-                message.channel.send(`Se cayo el sitio ${webpage} con el error ${err.code}`);
+                message.channel.send(`Se cayo la página ${webpage}, avisando a ${toFirstMailer}, ${toSecondMailer}, ${toThirdMailer}`)
                 console.error(`La página ${webpage} respondio con el error: ${err.code}`)
                 transporter.sendMail(mailOptions = {
                     from: fromMailer,
                     to: toFirstMailer + ', ' + toSecondMailer + ', ' + toThirdMailer,
-                    subject: `Se cayo la página ${webpage}`,
+                    subject: `Se cayó la página ${webpage}`,
                     text: `La página ${webpage} está caida, al intentar establecer conección con la página el sistema respondió: ${err.code}`
                 }, function (error, data) {
                     if (error) {
@@ -43,17 +43,15 @@ function fechThePage(webpage, fromMailer, toFirstMailer, toSecondMailer, toThird
                         console.log(`Email sent: ${data.response}`)
                     }
                 })
+                console.log("Retrying fech");
             })
 
             .then(res => {
                 console.log(`Res status for website: ${webpage} is ${res.statusText}`)
             })
-            .then(setTimeout(fechThePage, minutesToRetry, webpage, fromMailer, toFirstMailer))
-        message.channel.send(`Starting fetcher for ${webpage}`)
-
+            .then(setTimeout(fechThePage, minutesToRetry, webpage, fromMailer, toFirstMailer,toSecondMailer, toThirdMailer, message))
     } catch (error) {
         console.error("TRY CATCH ERROR: " + error)
-        message.channel.send(`Stopping fetcher for ${webpage} due to error: ${error}`)
     }
 
 }
@@ -63,10 +61,16 @@ function runTheFecherWithDiscord(message) {
     fechThePage('https://chat.smsmasivos.biz/Admin/Login', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
     fechThePage('http://run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
     fechThePage('https://delivery.run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message)
+    message.channel.send(`Starting fetcher for chat, run, delivery`)
 }
 
 function fechByPage(message, args) {
-    fetchThePage(args[0], fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+    if(!(message.content.includes('http://') || message.content.includes('https://')))
+    {
+        args[0] = `http://${args[0]}`
+    }
+    fechThePage(args[0], fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+    message.channel.send(`Starting fetcher for ${args[0]}`)
 }
 
 
