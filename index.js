@@ -1,12 +1,12 @@
-let { init } = require('./discord/client.js');
+let { initDiscordClient } = require('./discord/client.js');
 
-const main = async () => {
+const startDiscordClient = async () => {
   try {
-    init();
+    initDiscordClient();
   } catch (error) {
     console.error(`Aborting: ${error}`);
     process.exit(0);
   }
 };
 
-main();
+startDiscordClient();

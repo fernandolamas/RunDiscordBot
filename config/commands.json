@@ -1,3 +1,5 @@
 {
-    "randomNumber": "random"
+    "randomNumber": "random",
+    "webChecker": "webchecker",
+    "uploadToDrive": "drive"
 }

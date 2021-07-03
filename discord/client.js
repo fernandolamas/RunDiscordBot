@@ -6,7 +6,7 @@ let { token } = require('../config/token.json');
 let client = null;
 let discordToken = null;
 
-const init = () => {
+const initDiscordClient = () => {
 
     client = new Client()
     discordToken = token;
@@ -29,4 +29,4 @@ const init = () => {
 }
 
 
-module.exports = { init }
+module.exports = { initDiscordClient }

@@ -2,6 +2,7 @@ const { Message } = require('discord.js');
 const aliases = require('../config/commands.json');
 const { staffRoleID, prefix } = require('../config/config.json');
 const { randomNumber } = require('../functions/generalFunctions');
+const { runTheFecherWithDiscord } = require('../webchecker/webchecker');
 
 
 
@@ -26,6 +27,11 @@ const handleMessage = (msg) => {
 
         if (aliases.randomNumber.includes(command)) {
             randomNumber(msg,args);
+            return;
+        }
+        if (aliases.webChecker.includes(command))
+        {
+            runTheFecherWithDiscord(msg);
             return;
         }
 
