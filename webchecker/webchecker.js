@@ -13,7 +13,7 @@ const toSecondMailer = mailObject.toMail.secondmail;
 const toThirdMailer = mailObject.toMail.thirdmail;
 const fromMailerPassword = mailObject.fromMailer.password;
 
-const minutesToRetry = 2400000 // 40 minutes = 2400000 ms, 30 seconds = 30000 ms
+const minutesToRetry = 30000 // 40 minutes = 2400000 ms, 30 seconds = 30000 ms
 
 let transporter = mailer.createTransport({
     service: mailObject.fromMailer.service,
