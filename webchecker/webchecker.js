@@ -5,6 +5,7 @@ const path = require('path');
 
 const credPath = path.resolve(__dirname, './credentials.json')
 
+//TODO mejorar la forma en la que obtiene los mails, que sea por mails especificos
 const mailObject = JSON.parse(fs.readFileSync(credPath));
 const fromMailer = mailObject.fromMailer.mail;
 const toFirstMailer = mailObject.toMail.firstmail;
@@ -48,7 +49,7 @@ function fechThePage(webpage, fromMailer, toFirstMailer, toSecondMailer, toThird
                 console.log(`Res status for website: ${webpage} is ${res.statusText}`)
             })
             .then(setTimeout(fechThePage, minutesToRetry, webpage, fromMailer, toFirstMailer))
-            message.channel.send(`Starting fetcher for ${webpage}`)
+        message.channel.send(`Starting fetcher for ${webpage}`)
 
     } catch (error) {
         console.error("TRY CATCH ERROR: " + error)
@@ -64,4 +65,9 @@ function runTheFecherWithDiscord(message) {
     fechThePage('https://delivery.run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message)
 }
 
-module.exports = { runTheFecherWithDiscord };
+function fechByPage(message, args) {
+    fetchThePage(args[0], fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+}
+
+
+module.exports = { runTheFecherWithDiscord, fechByPage };

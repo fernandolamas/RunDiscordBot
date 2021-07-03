@@ -26,13 +26,18 @@ const handleMessage = (msg) => {
 
 
         if (aliases.randomNumber.includes(command)) {
-            randomNumber(msg,args);
+            randomNumber(msg, args);
             return;
         }
-        if (aliases.webChecker.includes(command))
-        {
-            runTheFecherWithDiscord(msg);
-            return;
+        if (aliases.webChecker.includes(command)) {
+            //TODO: a test to see if this works
+            if (!args.length > 0) {
+                runTheFecherWithDiscord(msg);
+                return;
+            } else {
+                fetchByPage(msg, args);
+                return;
+            }
         }
 
     } catch (e) {
