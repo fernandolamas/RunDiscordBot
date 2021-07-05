@@ -1,7 +1,6 @@
-const { Message } = require('discord.js');
 const aliases = require('../config/commands.json');
 const { staffRoleID, prefix } = require('../config/config.json');
-const { randomNumber, buildTheSize } = require('../functions/generalFunctions');
+const { randomNumber, buildTheSize, horoscopo } = require('../functions/generalFunctions');
 const { runTheFecherWithDiscord , fechByPage} = require('../webchecker/webchecker');
 
 
@@ -36,6 +35,16 @@ const handleMessage = (msg) => {
                 return;
             } else {
                 fechByPage(msg, args);
+                return;
+            }
+        }
+        if(aliases.horoscopo.includes(command))
+        {
+            if(!args.length > 0)
+            {
+                return;
+            }else{
+                horoscopo(msg,args[0]);
                 return;
             }
         }
