@@ -1,7 +1,6 @@
 
 function randomNumber(message, args)
 {
-    console.log("ingrese al random")
     if(args[0])
     {
         message.channel.send(Math.floor(Math.random() * args[0]))
@@ -9,6 +8,15 @@ function randomNumber(message, args)
         message.channel.send(Math.random())
     }
 }
+function buildTheSize(message, number)
+{
+    let d = "8"
+    for (let i = 0; i < number; i++) {
+        d = d + "=";
+    }
+    d = d + "B";
+    message.channel.send(d)
+}
 
 
-module.exports = { randomNumber }
+module.exports = { randomNumber, buildTheSize }
