@@ -12,6 +12,7 @@ const toFirstMailer = mailObject.toMail.firstmail;
 const toSecondMailer = mailObject.toMail.secondmail;
 const toThirdMailer = mailObject.toMail.thirdmail;
 const fromMailerPassword = mailObject.fromMailer.password;
+let alreadyFetching = false;
 
 const minutesToRetry = 2400000 // 40 minutes = 2400000 ms, 30 seconds = 30000 ms
 
@@ -58,10 +59,17 @@ function fechThePage(webpage, fromMailer, toFirstMailer, toSecondMailer, toThird
 
 function runTheFecherWithDiscord(message) {
 
-    fechThePage('https://chat.smsmasivos.biz/Admin/Login', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
-    fechThePage('http://run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
-    fechThePage('https://delivery.run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message)
-    message.channel.send(`Starting fetcher for chat, run, delivery`)
+    if(!alreadyFetching)
+    {
+        fechThePage('https://chat.smsmasivos.biz/Admin/Login', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+        fechThePage('http://run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+        fechThePage('https://delivery.run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message)
+        message.channel.send(`Starting fetcher for chat, run, delivery`)
+        return alreadyFetching = true;
+    }else{
+        message.channel.send(`The fetcher is already working!`)
+    }
+
 }
 
 function fechByPage(message, args) {
