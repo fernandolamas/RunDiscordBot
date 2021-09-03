@@ -30,7 +30,7 @@ function fechThePage(webpage, fromMailer, toFirstMailer, toSecondMailer, toThird
     try {
         fetch(webpage)
             .catch(err => {
-                message.channel.send(`Se cayo la página ${webpage}, avisando a ${toFirstMailer}, ${toSecondMailer}, ${toThirdMailer}`)
+                message.channel.send(`Se cayo la página ${webpage}, avisando por correo...`)
                 console.error(`La página ${webpage} respondio con el error: ${err.code}`)
                 transporter.sendMail(mailOptions = {
                     from: fromMailer,
@@ -61,7 +61,7 @@ function runTheFecherWithDiscord(message) {
 
     if(!alreadyFetching)
     {
-        fechThePage('https://chat.smsmasivos.biz/Admin/Login', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
+        fechThePage('https://chat.soybot.com/Admin/Login', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
         fechThePage('http://run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message);
         fechThePage('https://delivery.run0km.com/', fromMailer, toFirstMailer, toSecondMailer, toThirdMailer, message)
         message.channel.send(`Starting fetcher for chat, run, delivery`)
@@ -73,7 +73,7 @@ function runTheFecherWithDiscord(message) {
 }
 
 function fechByPage(message, args) {
-    if(!(message.content.includes('http://') || message.content.includes('https://')))
+    if(!(message.content.includes(/http\/\/|https:\/\//)))
     {
         args[0] = `http://${args[0]}`
     }
